@@ -25,7 +25,7 @@
 
 ## 在线试玩
 
-访问 [游戏链接](https://[你的GitHub用户名].github.io/translation-game/) 即可开始游戏！
+访问"C:\Users\shenh\Desktop\csc1002\game\index.html"即可开始游戏！
 
 ## 本地运行
 
