@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中英翻译小游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2a5298;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .word-display {
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 80%;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 5px rgba(42, 82, 152, 0.3);
+        }
+
+        button {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        button:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            min-height: 1.5em;
+        }
+
+        .correct {
+            color: #28a745;
+        }
+
+        .wrong {
+            color: #dc3545;
+        }
+
+        /* 烟花特效样式 */
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: firework 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes firework {
+            0% {
+                transform: translate(var(--x), var(--y));
+                width: 5px;
+                height: 5px;
+                opacity: 1;
+            }
+            50% {
+                width: 100px;
+                height: 100px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+
+        .firework::before,
+        .firework::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: inherit;
+        }
+
+        .firework::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .firework::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .word-display {
+                font-size: 1.5rem;
+            }
+
+            input {
+                width: 90%;
+            }
+        }
+
+        .restart-button {
+            display: none;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            margin-top: 1rem;
+        }
+
+        .restart-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .restart-button:active {
+            transform: translateY(0);
+        }
+
+        .restart-button.show {
+            display: inline-block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>中英翻译小游戏</h1>
+        <div class="game-info">
+            <div>得分: <span id="score">0</span></div>
+            <div>回合: <span id="round">1</span>/20</div>
+        </div>
+        <div class="word-display" id="chineseWord"></div>
+        <input type="text" id="answer" placeholder="请输入英文翻译" autocomplete="off">
+        <button onclick="checkAnswer()">提交</button>
+        <div class="message" id="message"></div>
+        <button class="restart-button" id="restartButton" onclick="restartGame()">再来一次</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html> 
